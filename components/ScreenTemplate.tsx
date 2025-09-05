@@ -5,14 +5,21 @@ import { Appbar, Surface, Text } from "react-native-paper";
 interface ScreenTemplateProps {
   title: string;
   subtitle: string;
+  showSettings?: boolean;
 }
 
-export default function ScreenTemplate({ title, subtitle }: ScreenTemplateProps) {
+export default function ScreenTemplate({ title, subtitle, showSettings = false }: ScreenTemplateProps) {
+  const handleSettingsPress = () => {
+    // Settings functionality can be implemented here
+    console.log("Settings pressed");
+  };
+
   return (
     <View style={styles.container}>
       {/* Info Bar using Paper Appbar */}
       <Appbar.Header elevated>
         <Appbar.Content title="Simple Template App" titleStyle={styles.headerTitle} />
+        {showSettings && <Appbar.Action icon="cog" iconColor="#fff" onPress={handleSettingsPress} />}
       </Appbar.Header>
 
       {/* Main Content using Paper Surface */}
@@ -33,6 +40,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   headerTitle: {
+    color: "#fff",
     textAlign: "center",
   },
   content: {
