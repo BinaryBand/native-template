@@ -1,3 +1,4 @@
+import { colors } from "@/constants/theme";
 import React from "react";
 import { StyleSheet, View } from "react-native";
 import { Appbar, Surface, Text } from "react-native-paper";
@@ -19,7 +20,7 @@ export default function ScreenTemplate({ title, subtitle, showSettings = false }
       {/* Info Bar using Paper Appbar */}
       <Appbar.Header elevated>
         <Appbar.Content title="Simple Template App" titleStyle={styles.headerTitle} />
-        {showSettings && <Appbar.Action icon="cog" iconColor="#fff" onPress={handleSettingsPress} />}
+        {showSettings && <Appbar.Action icon="cog" iconColor={colors.white} onPress={handleSettingsPress} />}
       </Appbar.Header>
 
       {/* Main Content using Paper Surface */}
@@ -40,7 +41,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   headerTitle: {
-    color: "#fff",
+    color: colors.white,
     textAlign: "center",
   },
   content: {
@@ -48,13 +49,13 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     padding: 20,
-    backgroundColor: "transparent",
+    backgroundColor: colors.background.transparent,
   },
   title: {
     marginBottom: 10,
   },
   subtitle: {
     textAlign: "center",
-    opacity: 0.7,
+    color: colors.text.secondary,
   },
 });
