@@ -1,43 +1,35 @@
 import { colors } from "@/constants/theme";
 import React, { useState } from "react";
 import { StyleSheet, View } from "react-native";
-import { Appbar, Menu, Surface, Text } from "react-native-paper";
+import { Appbar, Surface, Text } from "react-native-paper";
+import MenuShelf from "./MenuShelf";
 
 interface ScreenTemplateProps {
   title: string;
   subtitle: string;
   showMenu?: boolean;
+  isDarkTheme?: boolean;
+  onThemeToggle?: () => void;
 }
 
-export default function ScreenTemplate({ title, subtitle, showMenu = false }: ScreenTemplateProps) {
-  const [menuVisible, setMenuVisible] = useState(false);
+export default function ScreenTemplate({
+  title,
+  subtitle,
+  showMenu = false,
+  isDarkTheme = false,
+  onThemeToggle = () => {},
+}: ScreenTemplateProps) {
+  const [shelfVisible, setShelfVisible] = useState(false);
 
-  const openMenu = () => setMenuVisible(true);
-  const closeMenu = () => setMenuVisible(false);
-
-  const handleMenuItemPress = (item: string) => {
-    console.log(`${item} pressed`);
-    closeMenu();
-  };
+  const openShelf = () => setShelfVisible(true);
+  const closeShelf = () => setShelfVisible(false);
 
   return (
     <View style={styles.container}>
       {/* Info Bar using Paper Appbar */}
       <Appbar.Header elevated>
         <Appbar.Content title="Simple Template App" titleStyle={styles.headerTitle} />
-        {showMenu && (
-          <Menu
-            visible={menuVisible}
-            onDismiss={closeMenu}
-            anchor={<Appbar.Action icon="menu" iconColor={colors.white} onPress={openMenu} />}
-            contentStyle={styles.menuContent}
-          >
-            <Menu.Item onPress={() => handleMenuItemPress("Settings")} title="Settings" leadingIcon="cog" />
-            <Menu.Item onPress={() => handleMenuItemPress("Profile")} title="Profile" leadingIcon="account" />
-            <Menu.Item onPress={() => handleMenuItemPress("Help")} title="Help" leadingIcon="help-circle" />
-            <Menu.Item onPress={() => handleMenuItemPress("About")} title="About" leadingIcon="information" />
-          </Menu>
-        )}
+        {showMenu && <Appbar.Action icon="menu" iconColor={colors.white} onPress={openShelf} />}
       </Appbar.Header>
 
       {/* Main Content using Paper Surface */}
@@ -49,6 +41,9 @@ export default function ScreenTemplate({ title, subtitle, showMenu = false }: Sc
           {subtitle}
         </Text>
       </Surface>
+
+      {/* Menu Shelf */}
+      <MenuShelf visible={shelfVisible} onClose={closeShelf} isDarkTheme={isDarkTheme} onThemeToggle={onThemeToggle} />
     </View>
   );
 }
@@ -61,15 +56,12 @@ const styles = StyleSheet.create({
     color: colors.white,
     textAlign: "center",
   },
-  menuContent: {
-    backgroundColor: colors.white,
-  },
   content: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
     padding: 20,
-    backgroundColor: colors.background.transparent,
+    backgroundColor: "transparent",
   },
   title: {
     marginBottom: 10,
