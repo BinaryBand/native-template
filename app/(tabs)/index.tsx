@@ -6,7 +6,7 @@ export default function HomeScreen() {
     <ScreenTemplate
       title="Home Tab"
       subtitle="This is the home screen with Material Design components"
-      showSettings={true}
+      showMenu={true}
     />
   );
 }
